@@ -1,0 +1,7 @@
+http://colorbrewer2.org/#type=diverging&scheme=PRGn&n=5
+
+Violet   #7b3294
+Levander #c2a5cf
+White    #f7f7f7
+Apple    #a6dba0
+Grass    #008837

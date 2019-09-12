@@ -1,6 +1,15 @@
 
+/*
+Colorblind safe color palette from colorbrewer2.org.
+#7b3294 - Violet
+#c2a5cf - Levander
+#f7f7f7 - White
+#a6dba0 - Apple
+#008837 - Grass
+*/
+
 body {
-  background-color: #c2a5cf;
+  background-color: #f7f7f7;
   color: #7b3294;
   text-align: center;
 }

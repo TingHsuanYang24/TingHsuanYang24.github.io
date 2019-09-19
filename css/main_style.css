@@ -22,38 +22,57 @@ h1 {
 }
 
 #body-container {
+  /* set the background color to "White" (#f7f7f7) */
   background-color: #f7f7f7;
+  /* set the maximum width of this element to 1000px */
   max-width: 1000px;
+  /* set the margin width on all sides to auto, which means 0 on the top and bottom edges and the value calculated by browser on the left and right edges */
   margin: auto;
+  /* set the height  to 100vh, which is 100% of the viewport height */
   height: 100vh;
+  /* set the border line width to 2px, solid, and in "White" (#f7f7f7) */
   border: 2px solid #f7f7f7;
+  /* add rounded corners to the border set the radius to 25px (only one value specified so it applies to all four corners) */
   border-radius: 25px;
+  /* make the overflow clipped by the range of the element border, and the rest of the content will be invisible */
   overflow: hidden;
 }
 
 #header {
+  /*  set the background color to "Grass" (#008837) */
   background-color: #008837;
 }
 
 #profile-picture {
+  /* make the element float to the left of its container */
   float: left;
 }
 
 #welcome-text {
+  /* set the top padding to 25px */
   padding-top: 25px;
+  /* set the font size to 25px */
   font-size: 25px;
 }
 
 #research-interests {
+  /* set the horizontal alignment of text to left */
   text-align: left;
+  /* set the font size to 25px */
   font-size: 25px;
+  /* set elment position to relative (relative to its normal position) */
   position: relative;
+  /* make the element to move 150px to the right (from to its normal position) */
   left: 50px;
 }
 
 footer {
+  /* set font weight to bold */
   font-weight: bold;
+  /* set the font color to "Violet" (#7b3294) */
   color: #7b3294;
+  /* set text alignment to center */
   text-align: center;
+  /* set the font size to 16px */
   font-size: 16px;
 }

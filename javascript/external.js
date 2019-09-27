@@ -24,5 +24,8 @@ function condition()
   }
 }
 */
-var UserName;
-UserName = window.prompt("Please enter you name.", "Visitor" );
+
+function HelloVisitor() {
+  var Visitor = window.prompt("Please enter you name.", "visitor" );
+  document.getElementById("hello-visitor").innerHTML = "Hello, welcome " + Visitor + "!";
+}

@@ -5,10 +5,10 @@ document.write(user_name);
 x = 22;
 const y = 33;
 document.writeln(x + y);
-document.writeln("<br>");
+document.writeln("<br> 123");
 document.writeln(x += 33);
 */
-
+/*
 document.writeln("<button onclick='condition()'>Conditional Test</button>")
 
 function condition()
@@ -23,3 +23,6 @@ function condition()
   document.writeln("You choose Cancel!");
   }
 }
+*/
+var UserName;
+UserName = window.prompt("Please enter you name.", "Visitor" );

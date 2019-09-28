@@ -25,7 +25,8 @@ function condition()
 }
 */
 
-function HelloVisitor() {
+function HelloVisitor()
+{
   var Visitor = window.prompt("Please enter you name.", "visitor" );
-  document.getElementById("hello-visitor").innerHTML = "Hello, welcome to my webpage, " + Visitor + " !";
+  document.getElementById("hello-visitor").innerHTML = "Hello, welcome to my webpage, " + Visitor + "!";
 }

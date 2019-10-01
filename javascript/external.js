@@ -45,4 +45,3 @@ function welcome()
 
   return message
 }
-document.write(welcome());

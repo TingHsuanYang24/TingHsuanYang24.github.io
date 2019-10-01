@@ -4,17 +4,20 @@
   <title> Ting-Hsuan Yang</title>
    <!-- All styling for this HTML document are contained in this external css file -->
   <link rel="stylesheet" type="text/css" href="css/main_style.css">
+  <script src="javascript/external.js"></script>
 </head>
 
 <body>
   <div id="body-container">
     <div id="header">
       <h1>
-      <script src="javascript/external.js"></script>
+        <script>
+        document.write(welcome());
+        </script>
       </h1>
     </div>
     <div id="profile-picture">
-      <img src=images/profile-picture.jpg width=334px height=250px>
+      <img src=images/profile-picture.jpg width=334px height=250px></img>
     </div>
     <div id="welcome-text">
       My name is Ting Hsuan Yang.<br>
@@ -29,6 +32,11 @@
         <li> Air Pollution </li>
         <li> Spatio-Temporal Analysis </li>
       </ol>
+    </div>
+    <div id="webmap-reviews">
+      <script>
+      webmap_table();
+      </script>
     </div>
   </div>
   <div id="copyright">

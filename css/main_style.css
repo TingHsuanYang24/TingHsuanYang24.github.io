@@ -66,6 +66,12 @@ h1 {
   left: 50px;
 }
 
+#webmap-reviews {
+  text-align: left;
+  font-size: 25px;
+  position: relative;
+}
+
 #copyright {
  position: absolute;
  width: 1000px;

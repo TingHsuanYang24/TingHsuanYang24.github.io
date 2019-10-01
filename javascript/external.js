@@ -24,9 +24,25 @@ function condition()
   }
 }
 */
-
+/*
 function HelloVisitor()
 {
   var Visitor = window.prompt("Please enter you name.", "visitor" );
   document.getElementById("hello-visitor").innerHTML = "Hello, welcome to my webpage, " + Visitor + "!";
 }
+*/
+
+
+function welcome()
+{
+  let a = "Please enter your name.";
+  let b = "Type your name here."
+
+  // A prompt bix is used to prompt user to input a value before entering a page.
+  user_name = window.prompt(a, b);
+
+  message = "<h1>Hello, welcome to my web page, " + user_name + "!</h1>"
+
+  return message
+}
+document.write(welcome());

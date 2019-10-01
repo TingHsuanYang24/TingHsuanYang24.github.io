@@ -46,6 +46,7 @@ function welcome()
   return message
 
   document.write(welcome());
+<<<<<<< HEAD
 }
 
 var webmaps =
@@ -74,4 +75,6 @@ function webmap_table()
     document.write("</tr>");
   }
   document.write("</table>");
+=======
+>>>>>>> 063c95224e17f2beb9d64ef1288018b1cf911d7e
 }

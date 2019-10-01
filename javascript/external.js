@@ -48,15 +48,28 @@ function welcome()
   document.write(welcome());
 }
 
+var webmaps =
+[
+  ["Inside Asia",
+   "https://www.insideasiatours.com/step-inside/",
+   "The map of tourist attractions in several southeastern Asia countries developed by Green Chameleon and Inside Asia Tours."
+  ],
+  ["Our Nation's Air",
+   "https://gispub.epa.gov/air/trendsreport/2019/#home",
+   "The interactive annual report summarizes the nation's air quality status and trends through 2018 created by EPA"
+  ]
+]
+
+
 function webmap_table()
 {
   document.write("<table width=100%>");
-  for (var row=0; row<2; row++)
+  for (var row=0; row < webmaps.length; row++)
   {
     document.write("<tr>");
-    for (var column=0; column<3; column++)
+    for (var column=0; column < webmaps[0].length; column++)
     {
-      document.write("<td>" + row + "," + column + "</td>");
+      document.write("<td>" + webmaps[row][column] + "</td>");
     }
     document.write("</tr>");
   }

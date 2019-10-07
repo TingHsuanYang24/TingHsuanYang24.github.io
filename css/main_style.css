@@ -17,8 +17,8 @@ body {
 
 h1 {
   color: #f7f7f7; /*white*/
-  padding: 5px
-  margin: 0
+  padding: 5px;
+  margin: 0;
 }
 
 #body-container {
@@ -29,13 +29,14 @@ h1 {
   /* set the margin width on all sides to auto, which means 0 on the top and bottom edges and the value calculated by browser on the left and right edges */
   margin: auto;
   /* set the height  to 100vh, which is 100% of the viewport height */
-  height: 100vh;
+  height: 97vh;
   /* set the border line width to 2px, solid, and in "White" (#f7f7f7) */
   border: 2px solid #f7f7f7; /*white*/
   /* add rounded corners to the border set the radius to 25px (only one value specified so it applies to all four corners) */
   border-radius: 25px;
   /* make the overflow clipped by the range of the element border, and the rest of the content will be invisible */
   overflow: hidden;
+
 }
 
 #header {
@@ -70,11 +71,13 @@ h1 {
   text-align: left;
   font-size: 25px;
   position: relative;
+  margin: 30px;
 }
 
 #copyright {
- position: absolute;
+ margin:auto;
  width: 1000px;
+ overflow: hidden;
  text-align: center;
  bottom: 20px;
  color: #7b3294; /*Violet*/

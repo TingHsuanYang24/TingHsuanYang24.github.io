@@ -63,8 +63,9 @@ h1 {
   font-size: 25px;
   /* set elment position to relative (relative to its normal position) */
   position: relative;
-  /* make the element to move 150px to the right (from to its normal position) */
-  left: 50px;
+  /* make the element to move 250px to the right (from to its normal position) */
+  left: 250px;
+  width: 750px;
 }
 
 #webmap-reviews {

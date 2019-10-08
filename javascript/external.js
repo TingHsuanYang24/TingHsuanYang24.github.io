@@ -85,6 +85,6 @@ function rectangle()
 {
   var length = document.getElementById("length").value;
   var width = document.getElementById("width").value;
-  var area = parseFloat(number(length))*parseFloat(number(length));
-  document.getElementById("answer").innerHTML="The area is " + area;
+  var area = parseFloat(length)*parseFloat(length);
+  document.getElementById("answer").innerHTML="The area is :" + area;
 };

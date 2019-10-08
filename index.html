@@ -43,7 +43,6 @@
 
     <div id="area-calculator">
       <h3>Input length and width of a rectangle</h3>
-      <h3 id="answer"></h3>
       <form>
         <label for="length">Length :</label>
         <input name="length" id="length" type="number" required step="any">
@@ -51,8 +50,9 @@
         <label for="width">Width :</label>
         <input name="width" id="width" type="number" required step="any">
         <br>
-        <button id="calculate" onclick="rectangle()"> Calculate </button>
+        <input type="button" id="calculate" value="Calculate" onclick="rectangle()">
       </form>
+      <h3 id="answer">The area is :</h3>
     </div>
 
     <div id="webmap-reviews">

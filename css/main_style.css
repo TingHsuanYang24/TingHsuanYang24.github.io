@@ -64,12 +64,20 @@ h1 {
   /* set elment position to relative (relative to its normal position) */
   position: relative;
   /* make the element to move 250px to the right (from to its normal position) */
-  left: 250px;
-  width: 500px;
+  width: 300px;
+  margin:auto;
+  margin-right: 30px;
+  float: left;
+  clear: none;
 }
 
 #area-calculator{
   color: #008837; /*Grass*/
+  border-style: ridge;
+  margin:auto;
+  margin-left: 10px;
+  float: left;
+  clear: right;
 }
 
 #area-calculator h3{
@@ -79,8 +87,9 @@ h1 {
 #webmap-reviews {
   text-align: left;
   font-size: 25px;
-  position: relative;
   margin: 30px;
+  position: relative;
+  top: 100px;
 }
 
 #copyright {

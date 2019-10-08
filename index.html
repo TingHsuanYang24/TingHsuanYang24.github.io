@@ -33,11 +33,25 @@
         <li> Spatio-Temporal Analysis </li>
       </ol>
     </div>
+
+    <div id="area-calculator">
+      <h3>Input length and width of a rectangle</h3>
+      <h3 id="answer"></h3>
+      <form>
+        <label for="length">Length :</label>
+        <input name="length" id="length" type="number" required step="any">
+        <br>
+        <label for="width">Width :</label>
+        <input name="width" id="width" type="number" required step="any">
+        <br>
+        <button id="calculate" onclick="rectangle()"> Calculate </button>
+      </form>
+    </div>
+
     <div id="webmap-reviews">
       <script>
       webmap_table();
       </script>
-
     </div>
   </div>
   <div id="copyright">

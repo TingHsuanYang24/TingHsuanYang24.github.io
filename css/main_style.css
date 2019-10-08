@@ -65,7 +65,15 @@ h1 {
   position: relative;
   /* make the element to move 250px to the right (from to its normal position) */
   left: 250px;
-  width: 750px;
+  width: 500px;
+}
+
+#area-calculator{
+  color: #008837; /*Grass*/
+}
+
+#area-calculator h3{
+  color: #008837; /*Grass*/
 }
 
 #webmap-reviews {

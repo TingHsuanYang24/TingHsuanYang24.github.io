@@ -43,4 +43,105 @@ var ZoomViewer = L.Control.extend({
 (new ZoomViewer).addTo(mymap);
 */
 
+//SEVEN WONDERS//
+//Set icons for seven wonders
+var tajMahal_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/tajMahal_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var greatWall_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/greatWall_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var petra_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/petra_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var christRedeemer_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/christRedeemer_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var machuPicchu_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/machuPicchu_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var chichenItzaPyramid_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/chichenItzaPyramid_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var romeColosseum_icon = new L.Icon({
+  iconUrl: './images/seven_wonders/romeColosseum_icon.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// specify popup options
+var custom_wonders_popup = {
+  'className':'custom_wonders_popup'
+};
+
+//Add icons and popup windows for seven wonders to the map
+var tajMahal_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var tajMahal_intro = "<p>The Taj Mahal is an ivory-white marble mausoleum on the south bank of the Yamuna river in the Indian city of Agra. It was commissioned in 1632 by the Mughal emperor Shah Jahan to house the tomb of his favourite wife, Mumtaz Mahal; it also houses the tomb of Shah Jahan himself. (<a href='https://en.wikipedia.org/wiki/Taj_Mahal' target='_blank'>Wikipedia</a>)</p>";
+var tajMahal_pop = "<h3 font-weight='bold'>Taj Mahal, India</h3>" + tajMahal_intro + "<br>" +  "<center>"+tajMahal_img+"</center>";
+var tajMahal = L.marker([27.174961,78.042385],{icon: tajMahal_icon}).addTo(mymap);
+tajMahal.bindPopup(tajMahal_pop, custom_wonders_popup);
+
+var greatWall_img = "<img src='./images/seven_wonders/greatWall.jpg' height='200px' width='300px'>";
+var greatWall_intro = "<p>The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires against various nomadic groups of the steppe and their polities. (<a href='https://en.wikipedia.org/wiki/Great_Wall_of_China' target='_blank'>Wikipedia</a>)</p>";
+var greatWall_pop = "<h3 font-weight='bold'>The Great Wall, China</h3>" + greatWall_intro + "<br>" +  "<center>"+greatWall_img+"</center>";
+var greatWall = L.marker([40.334245,116.477652],{icon: greatWall_icon}).addTo(mymap);
+greatWall.bindPopup(greatWall_pop, custom_wonders_popup);
+
+var petra_img = "<img src='./images/seven_wonders/petra.jpg' height='200px' width='300px'>";
+var petra_intro = "<p>Petra is a famous archaeological site in Jordan's southwestern desert. Dating to around 300 B.C., it was the capital of the Nabatean Kingdom. Accessed via a narrow canyon called Al Siq, it contains tombs and temples carved into pink sandstone cliffs, earning its nickname, the \"Rose City.\" Perhaps its most famous structure is 45m-high Al Khazneh, a temple with an ornate, Greek-style facade, and known as The Treasury.(<a href='https://en.wikipedia.org/wiki/Petra' target='_blank'>Wikipedia</a>)</p>";
+var petra_pop = "<h3 font-weight='bold'>Petra, Jordan</h3>" + petra_intro + "<br>" +  "<center>"+petra_img+"</center>";
+var petra = L.marker([30.328611,35.441944],{icon: petra_icon}).addTo(mymap);
+petra.bindPopup(petra_pop, custom_wonders_popup);
+
+var christRedeemer_img = "<img src='./images/seven_wonders/christRedeemer.jpg' height='300px' width='200px'>";
+var christRedeemer_intro = "<p>Christ the Redeemer is an Art Deco statue of Jesus Christ in Rio de Janeiro, Brazil, created by French sculptor Paul Landowski and built by Brazilian engineer Heitor da Silva Costa, in collaboration with French engineer Albert Caquot. Romanian sculptor Gheorghe Leonida fashioned the face. Constructed between 1922 and 1931, the statue is 30 metres (98 ft) high, excluding its 8-metre (26 ft) pedestal. The arms stretch 28 metres (92 ft) wide.(<a href='https://en.wikipedia.org/wiki/Christ_the_Redeemer_(statue)' target='_blank'>Wikipedia</a>)</p>";
+var christRedeemer_pop = "<h3 font-weight='bold'>The Statue of Christ the Redeemer, Brazil</h3>" + christRedeemer_intro + "<br>" +  "<center>"+christRedeemer_img+"</center>";
+var christRedeemer = L.marker([-22.951389,-43.2108334],{icon: christRedeemer_icon}).addTo(mymap);
+christRedeemer.bindPopup(christRedeemer_pop, custom_wonders_popup);
+
+var machuPicchu_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var machuPicchu_intro = "<p>Machu Picchu is an Incan citadel set high in the Andes Mountains in Peru, above the Urubamba River valley. Built in the 15th century and later abandoned, it’s renowned for its sophisticated dry-stone walls that fuse huge blocks without the use of mortar, intriguing buildings that play on astronomical alignments and panoramic views.(<a href='https://en.wikipedia.org/wiki/Machu_Picchu' target='_blank'>Wikipedia</a>)</p>";
+var machuPicchu_pop = "<h3 font-weight='bold'>Machu Picchu, Peru</h3>" + machuPicchu_intro + "<br>" +  "<center>"+machuPicchu_img+"</center>";
+var machuPicchu = L.marker([-13.163056,-72.545556],{icon: machuPicchu_icon}).addTo(mymap);
+machuPicchu.bindPopup(machuPicchu_pop, custom_wonders_popup);
+
+var chichenItzaPyramid_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var chichenItzaPyramid_intro = "<p>Chichen Itza was a large pre-Columbian city built by the Maya people of the Terminal Classic period. The archaeological site is located in Tinúm Municipality, Yucatán State, Mexico. Chichen Itza was a major focal point in the Northern Maya Lowlands from the Late Classic (c. AD 600–900) through the Terminal Classic (c. AD 800–900) and into the early portion of the Postclassic period (c. AD 900–1200). The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands. The presence of central Mexican styles was once thought to have been representative of direct migration or even conquest from central Mexico, but most contemporary interpretations view the presence of these non-Maya styles more as the result of cultural diffusion.(<a href='https://en.wikipedia.org/wiki/Chichen_Itza' target='_blank'>Wikipedia</a>)</p>";
+var chichenItzaPyramid_pop = "<h3 font-weight='bold'>Chichen Itza Pyramid, Mexico</h3>" + chichenItzaPyramid_intro + "<br>" +  "<center>"+chichenItzaPyramid_img+"</center>";
+var chichenItzaPyramid = L.marker([20.682778,-88.569167],{icon: chichenItzaPyramid_icon}).addTo(mymap);
+chichenItzaPyramid.bindPopup(chichenItzaPyramid_pop, custom_wonders_popup);
+
+var romeColosseum_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var romeColosseum_intro = "<p>The Colosseum or Coliseum, also known as the Flavian Amphitheatre, is an oval amphitheatre in the centre of the city of Rome, Italy. Built of travertine limestone, tuff, and brick-faced concrete, it was the largest amphitheatre ever built at the time and held 50,000 spectators. (<a href='https://en.wikipedia.org/wiki/Colosseum' target='_blank'>Wikipedia</a>)</p>";
+var romeColosseum_pop = "<h3 font-weight='bold'>Colosseum, Italy</h3>" + romeColosseum_intro + "<br>" +  "<center>"+romeColosseum_img+"</center>";
+var romeColosseum = L.marker([41.890169,12.492269],{icon: romeColosseum_icon}).addTo(mymap);
+romeColosseum.bindPopup(romeColosseum_pop, custom_wonders_popup);
+
+
 mymap.setView([0, 0], 1);

@@ -1,4 +1,15 @@
+
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip{
   background: yellow;
 }
+
+
+/* customize 7 wonders popup styles */
+.custom_wonders_popup .leaflet-popup-content-wrapper,
+.custom_wonders_popup .leaflet-popup-tip {
+  color: rgb(32,32,32);
+  background: rgba(255,255,204,0.7);
+  line-height:10px;
+  border: 2px solid white;
+};

@@ -17,11 +17,11 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
   accessToken: mapbox_access_token
 }).addTo(mymap);
 */
-
+/*
 L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
     attribution: '<a href="attribution: mbAttr">Map tiles </a>by <a href="http://stamen.com/"> Stamen Design</a>, under <ahref="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"> CC BY SA</a>.',
 }).addTo(mymap);
-
+*/
 /*
 //Add a marker
 var marker = L.marker([51.5,-0.09]).addTo(mymap);
@@ -167,6 +167,11 @@ var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
     mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+
+var watercolor = L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
+        attribution: '<a href="attribution: mbAttr">Map tiles </a>by <a href="http://stamen.com/"> Stamen Design</a>, under <ahref="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"> CC BY SA</a>.',
+    });
+
 var terrain_v2 = L.tileLayer(mbUrl, {
         id: 'mapbox.mapbox-terrain-v2',
         accessToken: mapbox_access_token,
@@ -193,8 +198,9 @@ var wgs84 = L.extend({}, L.CRS, {
 
 
 var baseLayers = {
+    "Stamen Watercolor": watercolor,
     "Mapbox Terrain v2": terrain_v2,
-    "Mapbox Streets v8": streets_v8
+    "Mapbox Streets v8": streets_v8,
 };
 
 var overlays = {
@@ -204,8 +210,8 @@ var overlays = {
 var config = {
     overlays: overlays,
     baseLayers: baseLayers,
-    selectedBasemap: 'ESRI_Imagery_World_2D',
-    selectedOverlays: ["ASTER Digital Elevation Model 30M", "ASTER Digital Elevation Model Color 30M", "Cities"],
+    selectedBasemap: "Stamen Watercolor",
+    selectedOverlays: ["Cities"],
     mapServers: [/*{
         "url": "http://services.arcgisonline.com/arcgis/rest/services",
         "dictionary": "http://services.arcgisonline.com/arcgis/rest/services?f=pjson",

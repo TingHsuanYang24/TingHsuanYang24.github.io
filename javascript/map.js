@@ -7,7 +7,6 @@ var mymap = L.map('mapid',{
   }*/
 });
 
-
 var options = {key: geocoder_api_key, limit: 10};
 var control = L.Control.openCageSearch(options).addTo(mymap);
 
@@ -22,88 +21,6 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
     attribution: '<a href="attribution: mbAttr">Map tiles </a>by <a href="http://stamen.com/"> Stamen Design</a>, under <ahref="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"> CC BY SA</a>.',
 }).addTo(mymap);
-
-/* insert leaftlet plug-in: autolayers */
-var cities = new L.LayerGroup();
-L.marker([25.144392, 121.398302]).bindPopup('This is my hometown: <br> Bali, New Taipei, Taiwan').addTo(cities);
-
-var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-var terrain_v2 = L.tileLayer(mbUrl, {
-        id: 'mapbox.mapbox-terrain-v2',
-        accessToken: mapbox_access_token,
-        attribution: mbAttr
-    }),
-    streets_v8 = L.tileLayer(mbUrl, {
-        id: 'mapbox.mapbox-streets-v8',
-        accessToken: mapbox_access_token,
-        attribution: mbAttr
-    });
-var wgs84 = L.extend({}, L.CRS, {
-    projection: L.extend({}, L.Projection.LonLat, {
-        bounds: L.bounds([-180, -90], [180, 90])
-    }),
-    transformation: new L.Transformation(1 / 180, 1, -1 / 180, 0.5),
-    getSize: function(zoom) {
-        var b = this.projection.bounds,
-            s = this.scale(zoom),
-            min = this.transformation.transform(b.min, s),
-            max = this.transformation.transform(b.max, s);
-        return L.point(Math.abs(max.x - min.x), Math.abs(max.y - min.y));
-    }
-});
-
-
-var baseLayers = {
-    "Mapbox Terrain v2": terrain_v2,
-    "Mapbox Streets v8": streets_v8
-};
-
-var overlays = {
-    "Cities": cities
-};
-
-var config = {
-    overlays: overlays,
-    baseLayers: baseLayers,
-    selectedBasemap: 'ESRI_Imagery_World_2D',
-    selectedOverlays: ["ASTER Digital Elevation Model 30M", "ASTER Digital Elevation Model Color 30M", "Cities"],
-    mapServers: [/*{
-        "url": "http://services.arcgisonline.com/arcgis/rest/services",
-        "dictionary": "http://services.arcgisonline.com/arcgis/rest/services?f=pjson",
-        "tileUrl": "/MapServer/tile/{z}/{y}/{x}",
-        "name": "ArcGIS Online",
-        "type": "esri",
-        "maxZoom": 15,
-        "baseLayers": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"],
-        "whitelist": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"]
-    }, {
-        "url": "http://geoint.nrlssc.navy.mil/nrltileserver",
-        "dictionary": "http://geoint.nrlssc.navy.mil/nrltileserver/wms?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS",
-        "tileUrl": "/{z}/{x}/{y}.png",
-        "name": "Navy NRL",
-        "type": "nrltileserver",
-        "maxZoom": 16,
-        "baseLayers": ["bluemarble", "Landsat7", "DTED0_GRID_COLOR1", "ETOPO1_COLOR1", "NAIP", "DRG_AUTO"],
-        "blacklist": ["BlackMarble"]
-    }*/]
-};
-var control = L.control.autolayers(config).addTo(mymap);
-
-/* Insert leaftlet plug-in: fullscreen*/
-// detect fullscreen toggling
-mymap.on('enterFullscreen', function(){
-  if(window.console) window.console.log('enterFullscreen');
-});
-mymap.on('exitFullscreen', function(){
-  if(window.console) window.console.log('exitFullscreen');
-});
-
-/* Insert leaftlet plug-in: MeasureControl*/
-L.Control.measureControl().addTo(mymap);
-
 
 /*
 //Add a marker
@@ -221,26 +138,109 @@ var christRedeemer_pop = "<h3 font-weight='bold'>The Statue of Christ the Redeem
 var christRedeemer = L.marker([-22.951389,-43.2108334],{icon: christRedeemer_icon}).addTo(mymap);
 christRedeemer.bindPopup(christRedeemer_pop, custom_wonders_popup);
 
-var machuPicchu_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var machuPicchu_img = "<img src='./images/seven_wonders/machuPicchu.jpg' height='200px' width='300px'>";
 var machuPicchu_intro = "<p>Machu Picchu is an Incan citadel set high in the Andes Mountains in Peru, above the Urubamba River valley. Built in the 15th century and later abandoned, it’s renowned for its sophisticated dry-stone walls that fuse huge blocks without the use of mortar, intriguing buildings that play on astronomical alignments and panoramic views.(<a href='https://en.wikipedia.org/wiki/Machu_Picchu' target='_blank'>Wikipedia</a>)</p>";
 var machuPicchu_pop = "<h3 font-weight='bold'>Machu Picchu, Peru</h3>" + machuPicchu_intro + "<br>" +  "<center>"+machuPicchu_img+"</center>";
 var machuPicchu = L.marker([-13.163056,-72.545556],{icon: machuPicchu_icon}).addTo(mymap);
 machuPicchu.bindPopup(machuPicchu_pop, custom_wonders_popup);
 
-var chichenItzaPyramid_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var chichenItzaPyramid_img = "<img src='./images/seven_wonders/chichenItzaPyramid.jpg' height='200px' width='300px'>";
 var chichenItzaPyramid_intro = "<p>Chichen Itza was a large pre-Columbian city built by the Maya people of the Terminal Classic period. The archaeological site is located in Tinúm Municipality, Yucatán State, Mexico. Chichen Itza was a major focal point in the Northern Maya Lowlands from the Late Classic (c. AD 600–900) through the Terminal Classic (c. AD 800–900) and into the early portion of the Postclassic period (c. AD 900–1200). The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands. The presence of central Mexican styles was once thought to have been representative of direct migration or even conquest from central Mexico, but most contemporary interpretations view the presence of these non-Maya styles more as the result of cultural diffusion.(<a href='https://en.wikipedia.org/wiki/Chichen_Itza' target='_blank'>Wikipedia</a>)</p>";
 var chichenItzaPyramid_pop = "<h3 font-weight='bold'>Chichen Itza Pyramid, Mexico</h3>" + chichenItzaPyramid_intro + "<br>" +  "<center>"+chichenItzaPyramid_img+"</center>";
 var chichenItzaPyramid = L.marker([20.682778,-88.569167],{icon: chichenItzaPyramid_icon}).addTo(mymap);
 chichenItzaPyramid.bindPopup(chichenItzaPyramid_pop, custom_wonders_popup);
 
-var romeColosseum_img = "<img src='./images/seven_wonders/tajMahal.jpg' height='200px' width='300px'>";
+var romeColosseum_img = "<img src='./images/seven_wonders/romeColosseum.jpg' height='200px' width='300px'>";
 var romeColosseum_intro = "<p>The Colosseum or Coliseum, also known as the Flavian Amphitheatre, is an oval amphitheatre in the centre of the city of Rome, Italy. Built of travertine limestone, tuff, and brick-faced concrete, it was the largest amphitheatre ever built at the time and held 50,000 spectators. (<a href='https://en.wikipedia.org/wiki/Colosseum' target='_blank'>Wikipedia</a>)</p>";
 var romeColosseum_pop = "<h3 font-weight='bold'>Colosseum, Italy</h3>" + romeColosseum_intro + "<br>" +  "<center>"+romeColosseum_img+"</center>";
 var romeColosseum = L.marker([41.890169,12.492269],{icon: romeColosseum_icon}).addTo(mymap);
 romeColosseum.bindPopup(romeColosseum_pop, custom_wonders_popup);
 
-
-
-
-
 mymap.setView([0, 0], 1);
+
+
+/* insert leaftlet plug-in: autolayers */
+var cities = new L.LayerGroup();
+L.marker([25.144392, 121.398302]).bindPopup('This is my hometown: <br> Bali, New Taipei, Taiwan').addTo(cities);
+
+var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+var terrain_v2 = L.tileLayer(mbUrl, {
+        id: 'mapbox.mapbox-terrain-v2',
+        accessToken: mapbox_access_token,
+        attribution: mbAttr
+    }),
+    streets_v8 = L.tileLayer(mbUrl, {
+        id: 'mapbox.mapbox-streets-v8',
+        accessToken: mapbox_access_token,
+        attribution: mbAttr
+    });
+var wgs84 = L.extend({}, L.CRS, {
+    projection: L.extend({}, L.Projection.LonLat, {
+        bounds: L.bounds([-180, -90], [180, 90])
+    }),
+    transformation: new L.Transformation(1 / 180, 1, -1 / 180, 0.5),
+    getSize: function(zoom) {
+        var b = this.projection.bounds,
+            s = this.scale(zoom),
+            min = this.transformation.transform(b.min, s),
+            max = this.transformation.transform(b.max, s);
+        return L.point(Math.abs(max.x - min.x), Math.abs(max.y - min.y));
+    }
+});
+
+
+var baseLayers = {
+    "Mapbox Terrain v2": terrain_v2,
+    "Mapbox Streets v8": streets_v8
+};
+
+var overlays = {
+    "Cities": cities
+};
+
+var config = {
+    overlays: overlays,
+    baseLayers: baseLayers,
+    selectedBasemap: 'ESRI_Imagery_World_2D',
+    selectedOverlays: ["ASTER Digital Elevation Model 30M", "ASTER Digital Elevation Model Color 30M", "Cities"],
+    mapServers: [/*{
+        "url": "http://services.arcgisonline.com/arcgis/rest/services",
+        "dictionary": "http://services.arcgisonline.com/arcgis/rest/services?f=pjson",
+        "tileUrl": "/MapServer/tile/{z}/{y}/{x}",
+        "name": "ArcGIS Online",
+        "type": "esri",
+        "maxZoom": 15,
+        "baseLayers": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"],
+        "whitelist": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"]
+    }, {
+        "url": "http://geoint.nrlssc.navy.mil/nrltileserver",
+        "dictionary": "http://geoint.nrlssc.navy.mil/nrltileserver/wms?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS",
+        "tileUrl": "/{z}/{x}/{y}.png",
+        "name": "Navy NRL",
+        "type": "nrltileserver",
+        "maxZoom": 16,
+        "baseLayers": ["bluemarble", "Landsat7", "DTED0_GRID_COLOR1", "ETOPO1_COLOR1", "NAIP", "DRG_AUTO"],
+        "blacklist": ["BlackMarble"]
+    }*/]
+};
+var control = L.control.autolayers(config).addTo(mymap);
+
+/* Insert leaftlet plug-in: fullscreen*/
+// detect fullscreen toggling
+mymap.on('enterFullscreen', function(){
+  if(window.console) window.console.log('enterFullscreen');
+});
+mymap.on('exitFullscreen', function(){
+  if(window.console) window.console.log('exitFullscreen');
+});
+
+/* Insert leaftlet plug-in: MeasureControl*/
+L.Control.measureControl().addTo(mymap);
+
+/*Insert leaftlet plug-in: MiniMap*/
+var osmUrl='http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
+var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13});
+var miniMap = new L.Control.MiniMap(osm).addTo(mymap);

@@ -1,4 +1,12 @@
-var mymap = L.map('mapid');
+var mymap = L.map('mapid',{
+  zoom: 5,
+  fullscreenControl: true,
+  /*fullscreenControlOptions: { // optional
+    title:"Show me the fullscreen !",
+    titleCancel:"Exit fullscreen mode"
+  }*/
+});
+
 
 var options = {key: geocoder_api_key, limit: 10};
 var control = L.Control.openCageSearch(options).addTo(mymap);
@@ -84,6 +92,14 @@ var config = {
 };
 var control = L.control.autolayers(config).addTo(mymap);
 
+/* Insert leaftlet plug-in: fullscreen*/
+// detect fullscreen toggling
+mymap.on('enterFullscreen', function(){
+  if(window.console) window.console.log('enterFullscreen');
+});
+mymap.on('exitFullscreen', function(){
+  if(window.console) window.console.log('exitFullscreen');
+});
 
 /*
 //Add a marker

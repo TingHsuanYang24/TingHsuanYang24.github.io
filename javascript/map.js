@@ -1,6 +1,8 @@
 var mymap = L.map('mapid');
+
 var options = {key: geocoder_api_key, limit: 10};
 var control = L.Control.openCageSearch(options).addTo(mymap);
+
 /* // MAPBOX TILE LAYER
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',{
   maxZoom: 18,
@@ -8,7 +10,81 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
   accessToken: mapbox_access_token
 }).addTo(mymap);
 */
-L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {}).addTo(mymap);
+
+L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
+    attribution: '<a href="attribution: mbAttr">Map tiles </a>by <a href="http://stamen.com/"> Stamen Design</a>, under <ahref="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"> CC BY SA</a>.',
+}).addTo(mymap);
+
+/* insert leaftlet plug-in: autolayers */
+var cities = new L.LayerGroup();
+L.marker([25.144392, 121.398302]).bindPopup('This is my hometown: <br> Bali, New Taipei, Taiwan').addTo(cities);
+
+var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+var terrain_v2 = L.tileLayer(mbUrl, {
+        id: 'mapbox.mapbox-terrain-v2',
+        accessToken: mapbox_access_token,
+        attribution: mbAttr
+    }),
+    streets_v8 = L.tileLayer(mbUrl, {
+        id: 'mapbox.mapbox-streets-v8',
+        accessToken: mapbox_access_token,
+        attribution: mbAttr
+    });
+var wgs84 = L.extend({}, L.CRS, {
+    projection: L.extend({}, L.Projection.LonLat, {
+        bounds: L.bounds([-180, -90], [180, 90])
+    }),
+    transformation: new L.Transformation(1 / 180, 1, -1 / 180, 0.5),
+    getSize: function(zoom) {
+        var b = this.projection.bounds,
+            s = this.scale(zoom),
+            min = this.transformation.transform(b.min, s),
+            max = this.transformation.transform(b.max, s);
+        return L.point(Math.abs(max.x - min.x), Math.abs(max.y - min.y));
+    }
+});
+
+
+var baseLayers = {
+    "Mapbox Terrain v2": terrain_v2,
+    "Mapbox Streets v8": streets_v8
+};
+
+var overlays = {
+    "Cities": cities
+};
+
+var config = {
+    overlays: overlays,
+    baseLayers: baseLayers,
+    selectedBasemap: 'ESRI_Imagery_World_2D',
+    selectedOverlays: ["ASTER Digital Elevation Model 30M", "ASTER Digital Elevation Model Color 30M", "Cities"],
+    mapServers: [/*{
+        "url": "http://services.arcgisonline.com/arcgis/rest/services",
+        "dictionary": "http://services.arcgisonline.com/arcgis/rest/services?f=pjson",
+        "tileUrl": "/MapServer/tile/{z}/{y}/{x}",
+        "name": "ArcGIS Online",
+        "type": "esri",
+        "maxZoom": 15,
+        "baseLayers": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"],
+        "whitelist": ["ESRI_Imagery_World_2D", "ESRI_StreetMap_World_2D", "NGS_Topo_US_2D"]
+    }, {
+        "url": "http://geoint.nrlssc.navy.mil/nrltileserver",
+        "dictionary": "http://geoint.nrlssc.navy.mil/nrltileserver/wms?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS",
+        "tileUrl": "/{z}/{x}/{y}.png",
+        "name": "Navy NRL",
+        "type": "nrltileserver",
+        "maxZoom": 16,
+        "baseLayers": ["bluemarble", "Landsat7", "DTED0_GRID_COLOR1", "ETOPO1_COLOR1", "NAIP", "DRG_AUTO"],
+        "blacklist": ["BlackMarble"]
+    }*/]
+};
+var control = L.control.autolayers(config).addTo(mymap);
+
+
 /*
 //Add a marker
 var marker = L.marker([51.5,-0.09]).addTo(mymap);
@@ -142,6 +218,9 @@ var romeColosseum_intro = "<p>The Colosseum or Coliseum, also known as the Flavi
 var romeColosseum_pop = "<h3 font-weight='bold'>Colosseum, Italy</h3>" + romeColosseum_intro + "<br>" +  "<center>"+romeColosseum_img+"</center>";
 var romeColosseum = L.marker([41.890169,12.492269],{icon: romeColosseum_icon}).addTo(mymap);
 romeColosseum.bindPopup(romeColosseum_pop, custom_wonders_popup);
+
+
+
 
 
 mymap.setView([0, 0], 1);

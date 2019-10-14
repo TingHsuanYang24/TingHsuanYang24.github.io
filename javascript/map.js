@@ -101,6 +101,10 @@ mymap.on('exitFullscreen', function(){
   if(window.console) window.console.log('exitFullscreen');
 });
 
+/* Insert leaftlet plug-in: MeasureControl*/
+L.Control.measureControl().addTo(mymap);
+
+
 /*
 //Add a marker
 var marker = L.marker([51.5,-0.09]).addTo(mymap);

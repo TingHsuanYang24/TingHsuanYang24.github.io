@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Simple Mapping</title>
+
+  <!--Define internal CSS-->
   <style>
     html, body, #viewDiv {
       padding: 0;
@@ -12,28 +14,32 @@
       width: 100%;
     }
   </style>
+  <!-- Refer to external arcgis js and css file-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
   <script src="https://js.arcgis.com/4.13/"></script>
   <script>
-  require([
-    "esri/Map",
-    "esri/views/MapView"
-  ],
-  function(Map, MapView){
-    var map = new Map({
-      basemap: "streets"
+    // Load arcgis.js moduels
+    require([
+      "esri/Map",
+      "esri/views/MapView"
+    ],
+    function(Map, MapView){
+      // Set a basemap
+      var map = new Map({
+        basemap: "streets"
+      });
+      // Put the map in a division element and set mapview options
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        zoom: 10,
+        center: [-118.2095, 34.0866]
+      });
     });
-
-    var view = new MapView({
-      container: "viewDiv",
-      map: map,
-      zoom: 10,
-      center: [-118.2095, 34.0866]
-    });
-  });
   </script>
 </head>
 <body>
+  <!--Creat a divisoin for the map-->
   <div id="viewDiv"></div>
 </body>
 </html>

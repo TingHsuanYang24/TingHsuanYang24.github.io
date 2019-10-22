@@ -26,6 +26,7 @@
       "esri/layers/MapImageLayer"
     ],
     function(Map, MapView, TileLayer, MapImageLayer){
+      // Creat a renderer (markers) for a dynamic map image layer to use later
       var CitiesRenderer = {
         type: "simple", //autocasts as new SimpleRenderer()
         symbol: {
@@ -40,9 +41,9 @@
         },
         label: "Cities"
       };
-
-      var CitieLayer = new MapImageLayer({
-        url: "https://sampleserver6.arcgisonline.com/arcgis/reset/services/USA/MapServer",
+      // Create a dynamic map image layer by referencing its URL
+      var CitiesLayer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
         sublayers: [
           {
             id: 0,
@@ -58,7 +59,7 @@
       // Create a map. Set its basemap and tilelayers.
       var map = new Map({
         basemap: "dark-gray",
-        layers: [ TransportationLayer,  CitieLayer ]
+        layers: [ CitiesLayer, TransportationLayer]
       });
       // Put the map in a division element and set mapview options
       var view = new MapView({

@@ -73,11 +73,12 @@
         center: [-118.2095, 34.0866]    // Set mapview center point
       });
 
+      // Set a event on click and asign its callback function
       view.on("click", eventHandler);
-
+      // Set a callback function for the on click event
       function eventHandler(event){
-        console.log("You just triggered a 'click' event!");
-        alert("You just triggered a 'click' event! ");
+        console.log("You just triggered a 'click' event!"); // Print a line of text
+        alert("You just triggered a 'click' event! ");      // Call a browser popup window to show the message
       };
     });
   </script>

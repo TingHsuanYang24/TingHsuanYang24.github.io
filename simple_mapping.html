@@ -7,16 +7,18 @@
 
   <!--Define internal CSS-->
   <style>
+    /*set style for content within html tag, body tag, and the element with an id "ViewDiv" */
     html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
+      padding: 0;     /*set padding to 0*/
+      margin: 0;      /*set marging to 0*/
+      height: 100%;   /*set element height to 100%*/
+      width: 100%;    /*set element width to 100% */
+    };
   </style>
   <!-- Refer to external arcgis js and css file-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
   <script src="https://js.arcgis.com/4.13/"></script>
+  <!-- Insert script for making a map and defining mapview using arcgis.js moduels-->
   <script>
     // Load arcgis.js moduels
     require([
@@ -24,16 +26,16 @@
       "esri/views/MapView"
     ],
     function(Map, MapView){
-      // Set a basemap
+      // Create a map then set its basemap.
       var map = new Map({
         basemap: "streets"
       });
-      // Put the map in a division element and set mapview options
+      // Set a mapview
       var view = new MapView({
-        container: "viewDiv",
-        map: map,
-        zoom: 10,
-        center: [-118.2095, 34.0866]
+        container: "viewDiv",           // Put the mapview in a division (element id="viewDiv")
+        map: map,                       // Asign the predefined map to the mapview
+        zoom: 10,                       // Set zoom level
+        center: [-118.2095, 34.0866]    // Set mapview center point
       });
     });
   </script>

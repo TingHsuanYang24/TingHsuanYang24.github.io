@@ -73,11 +73,11 @@
         zoom: 10,                       // Set zoom level
         center: [-118.2095, 34.0866]    // Set mapview center point
       });
-
+      // Set a basemap gallery
       var basemapGallery = new BasemapGallery({
-        view: view
+        view: views                     // Set the view from which the widget will operate
       });
-
+      // Add widget to the top right corner of the view
       view.ui.add(basemapGallery, {
         position: "top-right"
       });

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Basemap Gallery</title>
+
+  <!--Define internal CSS-->
+  <style>
+    /*set style for content within html tag, body tag, and the element with an id "ViewDiv" */
+    html, body, #viewDiv {
+      padding: 0;     /*set padding to 0*/
+      margin: 0;      /*set marging to 0*/
+      height: 100%;   /*set element height to 100%*/
+      width: 100%;    /*set element width to 100%*/
+    }
+  </style>
+  <!-- Refer to external arcgis js and css file-->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <!-- Insert script for making a map and defining mapview using arcgis.js moduels-->
+  <script>
+    // Load arcgis.js moduels
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/TileLayer",
+      "esri/layers/MapImageLayer",
+      "esri/widgets/BasemapGallery"
+    ],
+    function(Map, MapView, TileLayer, MapImageLayer, BasemapGallery){
+      // Creat a renderer (markers) for a dynamic map image layer to use later
+      var CitiesRenderer = {
+        type: "simple", //autocasts as new SimpleRenderer()
+        //Set symbol options
+        symbol: {
+          type: "simple-marker", //autocasts as new SimpleMarkerSymbol()
+          size: 3,
+          color: "yellow",
+          style: "circle",
+          outline: {
+            width: 1,
+            color: "yellow"
+          }
+        },
+        //Set labels
+        label: "Cities"
+      };
+      // Create a dynamic map image layer by referencing its URL and set layer options
+      var CitiesLayer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+        sublayers: [
+          {
+            id: 0,
+            renderer: CitiesRenderer,
+            opacity: 0.4
+          }
+        ]
+      });
+      // Create a tile layer by referencing its URL
+      var TransportationLayer = new TileLayer({
+        url: "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer"
+      });
+      // Create a map then set its basemap and tilelayers.
+      var map = new Map({
+        basemap: "dark-gray",
+        layers: [ CitiesLayer, TransportationLayer]
+      });
+      // Set a mapview
+      var view = new MapView({
+        container: "viewDiv",           // Put the mapview in a division (element id="viewDiv")
+        map: map,                       // Asign the predefined map to the mapview
+        zoom: 10,                       // Set zoom level
+        center: [-118.2095, 34.0866]    // Set mapview center point
+      });
+
+      var basemapGallery = new BasemapGallery({
+        view: view
+      });
+
+      view.ui.add(basemapGallery, {
+        position: "top-right"
+      });
+
+      // Set a event on click and asign its callback function
+      view.on("click", eventHandler);
+      // Set a callback function for the on click event
+      function eventHandler(event){
+        console.log("You just triggered a 'click' event!"); // Print a line of text
+        alert("You just triggered a 'click' event! ");      // Call a browser popup window to show the message
+      };
+    });
+  </script>
+</head>
+<body>
+  <!--Creat a divisoin for the map-->
+  <div id="viewDiv"></div>
+</body>
+</html>

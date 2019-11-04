@@ -7,6 +7,58 @@ Colorblind safe color palette from colorbrewer2.org.
 #a6dba0 - Apple
 #008837 - Grass
 */
+/* drop-down menun */
+.dropdown {
+  font-size: 12px;
+  color: #7b3294; /*Violet*/
+  background-color: MistyRose;
+  position: relative;
+  TOP: 5px;
+  width: 1000px;
+  height: 35px;
+  text-align: center;
+  /*right: 10px;*/
+  /*top: 10px;*/
+  display: inline-block;
+  border-radius: 10px 10px 10px 10px;
+  /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+  z-index: 500;
+}
+
+.dropdown-content {
+  color: #7b3294; /*Violet*/
+  font-size: 12px;
+  text-align: center;
+  display: none;
+  position: absolute;
+  top: 35px;
+  text-align: left;
+  background-color: #f9f9f9;
+  width: 1000px;
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /*padding: 10px 10px;*/
+  z-index: 500;
+}
+
+.dropdown:hover{
+  background-color: lightpink;
+  border-radius: 10px 10px 0px 0px;
+  color: #f7f7f7; /*white*/
+}
+
+#map-works
+{
+  color: #7b3294; /*Violet*/
+  font-size: 16px;
+  text-align: center;
+  margin: 10px 10px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  background-color: MistyRose;
+}
 
 body {
   background-color: #a6dba0; /*Apple*/
@@ -36,7 +88,8 @@ h1 {
   border-radius: 25px;
   /* make the overflow clipped by the range of the element border, and the rest of the content will be invisible */
   overflow: hidden;
-
+  position: relative;
+  top: 10px;
 }
 
 #header {

@@ -32,7 +32,6 @@ function HelloVisitor()
 }
 */
 
-
 function welcome()
 {
   let a = "Please enter your name.";
@@ -88,3 +87,13 @@ function rectangle()
   var area = parseFloat(length)*parseFloat(length);
   document.getElementById("answer").innerHTML="The area is :" + area;
 };
+/*
+//Set content to display in drop-down menu
+document.getElementById("map-works").innerHTML = "<a href='https://irinaramirez9.github.io/' target='_blank'>Irina Ramirez</a><br><a href='https://TingHsuanYang24.github.io/' target='_blank'>TingHsuan Yang</a>";
+
+
+document.getElementById("map-works").innerHTML = "<a href='https://TingHsuanYang24.github.io/tile_layer.html' target='_blank'>Tile Layer</a><br>"+
+                                                 "<a href='https://TingHsuanYang24.github.io/on_event.html' target='_blank'>View On Event</a><br>"+
+                                                 "<a href='https://TingHsuanYang24.github.io/basemap_gallery.html' target='_blank'>Basemap Gallery</a><br>"+
+                                                 "<a href='https://TingHsuanYang24.github.io/query_task.html' target='_blank'>Query Task</a>";
+*/

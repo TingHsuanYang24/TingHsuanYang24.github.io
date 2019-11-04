@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Simple Mapping</title>
+
+  <!--Define internal CSS-->
+  <style>
+    /*set style for content within html tag, body tag, and the element with an id "ViewDiv" */
+    html, body, #viewDiv {
+      padding: 0;     /*set padding to 0*/
+      margin: 0;      /*set marging to 0*/
+      height: 100%;   /*set element height to 100%*/
+      width: 100%;    /*set element width to 100% */
+    };
+    #optionsDiv {
+        background-color: dimgray;
+        color: white;
+        padding: 10px;
+        width: 350px;
+      }
+      .esri-popup .esri-popup-header .esri-title {
+        font-size: 18px;
+        font-weight: bolder;
+      }
+      .esri-popup .esri-popup-body  .esri-popup-content {
+        font-size: 14px;
+      }
+    </style>
+  <!-- Refer to external arcgis js and css file-->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <!-- Insert script for making a map and defining mapview using arcgis.js moduels-->
+  <script>
+    // Load arcgis.js moduels
+    require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/widgets/Print",
+          "esri/layers/TileLayer",
+          "esri/layers/GraphicsLayer",
+          "esri/tasks/QueryTask",
+          "esri/tasks/support/Query",
+          "dojo/_base/array",
+          "dojo/dom",
+          "dojo/on",
+          "dojo/domReady!"
+        ],
+    function(Map, MapView, TileLayer, GraphicsLayer, QueryTask, Query, arrayUtils, dom, on){
+      // Create a tile layer by referencing its URL
+      var World_Boundaries_and_Places  = new TileLayer({
+        url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/0"
+      });
+      // Create a map then set its basemap and tilelayers.
+      var map = new Map({
+        basemap: "oceans",
+        layers: [ World_Boundaries_and_Places ]
+      });
+      // Set a mapview
+      var view = new MapView({
+        container: "viewDiv",           // Put the mapview in a division (element id="viewDiv")
+        map: map,                       // Asign the predefined map to the mapview
+        zoom: 10,                       // Set zoom level
+        center: [-118.2095, 34.0866]    // Set mapview center point
+      });
+
+     // Set a print widgets
+     view.when(function() {
+       var print = new Print({
+          view: view,
+          // specify your own print service
+          printServiceUrl:"https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+      });
+
+      // Add widget to the top right corner of the view
+      view.ui.add(print, "top-right");
+    });
+
+    // Execute the following callback function when the instance of the class loads. Callback function:
+    view.when(function() {
+      view.ui.add("optionsDiv", "bottom-right"); // Add the new division for query to the bottom-right corner of the mapview,
+      on(dom.byId("doBtn"), "click", doQuery);   // Set to script to run callbak function "doQuery" on click of the query bottom.
+    });
+    // Set variables for attribute query selectors
+    var attributeName = dom.byId("attSelect");
+    var value = dom.byId("textInput");
+    // Define callbak function for on-click event of query bottom
+    function doQuery(){
+      resultsLayer.removeAll();   // Clear results form previous query session
+      params.where = attributeName.value + value.value;  // Set where claws for query with selected values
+      qTask.execute(params)       // Execute a new query task with predifined new query options "params"
+        .then(getResults)         // Execute callback function "getResults" when promise resolves
+        .catch(promiseRejected);  // Execute callback function "promiseRejected" when the promise is rejected
+    }
+    // Define callbak function for resolved promise in another callbak function
+    function getResults(response) {
+      // Set variables for managing multiple query results into an dojo array,
+      // then iterates all the elements in the array,
+      // passing them to the callback function and then returning a new array with any of the modified results.
+      var popResults = arrayUtils.map(response.features, function(feature) {
+          feature.popupTemplate = popupTemplate; // Set popup template to use for query results
+          return feature;                        // Return arrayed query results
+        });
+        resultsLayer.addMany(popResults); // Add multiple query results (popResults) to a predefined graphics layer
+        // Set view to the query results then execute callback function when promise resolves
+        view.goTo(popResults).then(function() {
+          view.popup.open({               // Open popup window with the following options
+            features: popResults,         // Set features to show
+            featureMenuOpen: true,        // Display multiple features in a popup in a list rather than displaying the first selected feature
+            updateLocationEnabled: true   // Updates the location of popup based on
+          });
+        });
+        // Set the HTML markup contained within the element with an id "printResults" and change the content to the number of query results found.
+        dom.byId("printResults").innerHTML = popResults.length + " results found!";
+    }
+    // Define callbak function for rejected promise in another callbak function
+    function promiseRejected(error){
+      console.error("Promise rejected: ", error.message);  //Pint error message
+    }
+
+
+    // Set variables  feature layer to query
+    var appleStores = "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Apple_Stores/FeatureServer/0";
+    // Set popup template for dsplaying query results
+    var popupTemplate = {
+      title: "{Store}",
+      fieldInfos: [{
+        fieldName: "Store", // Set field name to display in popups
+        label: "Store",     // Set field alias
+        }],
+      // Set template for defining and formatting the popup's content
+      content: "<b>Store:</b> {Store} " + "<br><b>Opening Date:</b> {Opening_Date}" + "<br><b>Address:</b> {Address}" + "<br><b>Store Page Link:</b> {Store_Page_Link}"
+    };
+    // Set variables for new GraphicsLayer
+    var resultsLayer = new GraphicsLayer();
+    // Set variables for new QueryTask
+    var qTask = new QueryTask({
+      url: appleStores
+    });
+    // Set variables for new Query options (parameters for executing queries)
+    var params = new Query({
+      returnGeometry: true,
+      outFields:["*"]
+    });
+
+  });
+  </script>
+</head>
+<body>
+  <!--Creat a divisoin for the map-->
+  <div id="viewDiv"></div>
+  <!--Creat a divisoin to display feature query selectors, query function bottom, and to print results-->
+  <div class="esri-widget" id="optionsDiv">
+    <h2>Worldwide Apple Stores</h2>
+    <select class="esri-widget" id="attSelect">
+      <option value="Country" selected>Country</option>
+      <option value="Address">Address</option>
+    </select>
+    <form class="esri-widget" id="textInput">
+      <input type="text" name="Country_Address">
+    </form>
+    <br>
+    <br>
+    <button class="esri-widget" id="doBtn">Do Query</button>
+    <br>
+    <p><span id="printResults"></span></p>
+
+</body>
+</html>

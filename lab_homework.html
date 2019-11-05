@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Simple Mapping</title>
+  <title>Lab Homework</title>
 
   <!--Define internal CSS-->
   <style>
@@ -13,158 +13,202 @@
       margin: 0;      /*set marging to 0*/
       height: 100%;   /*set element height to 100%*/
       width: 100%;    /*set element width to 100% */
-    };
+    }
+
     #optionsDiv {
-        background-color: dimgray;
-        color: white;
-        padding: 10px;
-        width: 350px;
-      }
-      .esri-popup .esri-popup-header .esri-title {
-        font-size: 18px;
-        font-weight: bolder;
-      }
-      .esri-popup .esri-popup-body  .esri-popup-content {
-        font-size: 14px;
-      }
-    </style>
+      background-color: white;
+      color: black;
+      padding: 6px;
+      max-width: 400px;
+    }
+    #copyright {
+      color:"black";
+      background-color: "white";
+      margin: 0px;
+      width: 1000px;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      height: 15px;
+      top: -15px;
+      z-index: 500;
+    }
+  </style>
   <!-- Refer to external arcgis js and css file-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
   <script src="https://js.arcgis.com/4.13/"></script>
   <!-- Insert script for making a map and defining mapview using arcgis.js moduels-->
   <script>
-    // Load arcgis.js moduels
+    // Load ArcGIS.js moduels
     require([
           "esri/Map",
           "esri/views/MapView",
           "esri/widgets/Print",
           "esri/layers/TileLayer",
-          "esri/layers/GraphicsLayer",
-          "esri/tasks/QueryTask",
-          "esri/tasks/support/Query",
-          "dojo/_base/array",
-          "dojo/dom",
-          "dojo/on",
-          "dojo/domReady!"
+          "esri/Graphic",
+          "esri/layers/FeatureLayer",
+          "esri/widgets/Legend"
         ],
-    function(Map, MapView, TileLayer, GraphicsLayer, QueryTask, Query, arrayUtils, dom, on){
-      // Create a tile layer by referencing its URL
+    function(Map, MapView, Print, TileLayer,  Graphic, FeatureLayer, Legend){
+     // Create a tile layer by referencing its URL
       var World_Boundaries_and_Places  = new TileLayer({
-        url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/0"
+        url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer",
+        outFields: ["*"]
       });
+
+      // Set variables feature layer to query
+      var layer = new FeatureLayer({
+        // autocasts as new PortalItem()
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Apple_Stores/FeatureServer/0",
+        outFields: ["*"]
+      });
+
       // Create a map then set its basemap and tilelayers.
       var map = new Map({
         basemap: "oceans",
-        layers: [ World_Boundaries_and_Places ]
+        layers: [ layer, World_Boundaries_and_Places]
       });
+
       // Set a mapview
       var view = new MapView({
         container: "viewDiv",           // Put the mapview in a division (element id="viewDiv")
         map: map,                       // Asign the predefined map to the mapview
-        zoom: 10,                       // Set zoom level
-        center: [-118.2095, 34.0866]    // Set mapview center point
-      });
-
-     // Set a print widgets
+        popup: {
+          autoOpenEnabled: false,
+          dockEnabled: true,
+          dockOptions: {
+            // dock popup at bottom-right side of view
+            buttonEnabled: false,
+            breakpoint: false,
+            position: "bottom-right"
+         }
+       }
+     });
+     // Set a new print widgets
      view.when(function() {
        var print = new Print({
           view: view,
-          // specify your own print service
+          // specify print service
           printServiceUrl:"https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
       });
-
       // Add widget to the top right corner of the view
       view.ui.add(print, "top-right");
     });
 
-    // Execute the following callback function when the instance of the class loads. Callback function:
-    view.when(function() {
-      view.ui.add("optionsDiv", "bottom-right"); // Add the new division for query to the bottom-right corner of the mapview,
-      on(dom.byId("doBtn"), "click", doQuery);   // Set to script to run callbak function "doQuery" on click of the query bottom.
-    });
-    // Set variables for attribute query selectors
-    var attributeName = dom.byId("attSelect");
-    var value = dom.byId("textInput");
-    // Define callbak function for on-click event of query bottom
-    function doQuery(){
-      resultsLayer.removeAll();   // Clear results form previous query session
-      params.where = attributeName.value + value.value;  // Set where claws for query with selected values
-      qTask.execute(params)       // Execute a new query task with predifined new query options "params"
-        .then(getResults)         // Execute callback function "getResults" when promise resolves
-        .catch(promiseRejected);  // Execute callback function "promiseRejected" when the promise is rejected
-    }
-    // Define callbak function for resolved promise in another callbak function
-    function getResults(response) {
-      // Set variables for managing multiple query results into an dojo array,
-      // then iterates all the elements in the array,
-      // passing them to the callback function and then returning a new array with any of the modified results.
-      var popResults = arrayUtils.map(response.features, function(feature) {
-          feature.popupTemplate = popupTemplate; // Set popup template to use for query results
-          return feature;                        // Return arrayed query results
-        });
-        resultsLayer.addMany(popResults); // Add multiple query results (popResults) to a predefined graphics layer
-        // Set view to the query results then execute callback function when promise resolves
-        view.goTo(popResults).then(function() {
-          view.popup.open({               // Open popup window with the following options
-            features: popResults,         // Set features to show
-            featureMenuOpen: true,        // Display multiple features in a popup in a list rather than displaying the first selected feature
-            updateLocationEnabled: true   // Updates the location of popup based on
-          });
-        });
-        // Set the HTML markup contained within the element with an id "printResults" and change the content to the number of query results found.
-        dom.byId("printResults").innerHTML = popResults.length + " results found!";
-    }
-    // Define callbak function for rejected promise in another callbak function
-    function promiseRejected(error){
-      console.error("Promise rejected: ", error.message);  //Pint error message
-    }
+      // Set legend to display
+      var legend = new Legend({
+        view: view,
+        layerInfos: [
+          {
+            layer: layer
+          }
+        ]
+      });
 
+    // Add legend to the bottom-left corner of view
+    view.ui.add(legend, "bottom-left");
+    // Add optionsDiv (the query selecter) to the bottom-right corner of view
+    view.ui.add("optionsDiv", "top-left");
 
-    // Set variables  feature layer to query
-    var appleStores = "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Apple_Stores/FeatureServer/0";
-    // Set popup template for dsplaying query results
-    var popupTemplate = {
-      title: "{Store}",
-      fieldInfos: [{
-        fieldName: "Store", // Set field name to display in popups
-        label: "Store",     // Set field alias
-        }],
-      // Set template for defining and formatting the popup's content
-      content: "<b>Store:</b> {Store} " + "<br><b>Opening Date:</b> {Opening_Date}" + "<br><b>Address:</b> {Address}" + "<br><b>Store Page Link:</b> {Store_Page_Link}"
-    };
-    // Set variables for new GraphicsLayer
-    var resultsLayer = new GraphicsLayer();
-    // Set variables for new QueryTask
-    var qTask = new QueryTask({
-      url: appleStores
-    });
-    // Set variables for new Query options (parameters for executing queries)
-    var params = new Query({
-      returnGeometry: true,
-      outFields:["*"]
+    // additional query fields initially set to null for basic query
+    var distance = null;
+    var units = null;
+
+    //create graphic for mouse point click
+    var pointGraphic = new Graphic({
+      symbol: {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        color: [0, 0, 139],
+        outline: {
+          color: [255, 255, 255],
+          width: 1.5
+        }
+      }
     });
 
+    // when query type changes, set appropriate values
+    var queryOpts = document.getElementById("query-type");
+
+    // Add event listener to the map
+    queryOpts.addEventListener("change", function() {
+      switch (queryOpts.value) {
+        // values set for distance query
+        case "distance":
+          distance = 200;
+          units = "miles";
+          break;
+        default:
+          // Default set to basic query
+          distance = null;
+          units = null;
+      }
+    });
+
+  layer.load().then(function() {
+    // Set the view extent to the data extent
+    view.extent = layer.fullExtent;
+    layer.popupTemplate = layer.createPopupTemplate();
   });
-  </script>
+
+  // Set on-clickevent to execute query
+  view.on("click", function(event) {
+    view.graphics.remove(pointGraphic);
+    queryFeatures(event);
+  });
+
+  // Set the callback function for feature query on "layer"
+  function queryFeatures(screenPoint) {
+    const point = view.toMap(screenPoint);
+    layer
+      .queryFeatures({
+        geometry: point,
+        // distance and units will be null if basic query selected
+        distance: distance,
+        units: units,
+        spatialRelationship: "intersects",
+        returnGeometry: true,
+        outFields: ["*"]
+      })
+      .then(function(featureSet) {
+        // set graphic location to mouse pointer and add to mapview
+        pointGraphic.geometry = point;
+        view.graphics.add(pointGraphic);
+        // open popup of query result
+        view.popup.open({
+          location: point,
+          features: featureSet.features,
+          featureMenuOpen: true
+        });
+      });
+  }
+});
+</script>
 </head>
+
 <body>
   <!--Creat a divisoin for the map-->
   <div id="viewDiv"></div>
   <!--Creat a divisoin to display feature query selectors, query function bottom, and to print results-->
-  <div class="esri-widget" id="optionsDiv">
-    <h2>Worldwide Apple Stores</h2>
-    <select class="esri-widget" id="attSelect">
-      <option value="Country" selected>Country</option>
-      <option value="Address">Address</option>
+  <div id="optionsDiv" class="esri-widget">
+    <p>
+      Select a query type and click a point on the map to view the results.
+    </p>
+    <select id="query-type" class="esri-widget">
+      <option value="basic">Basic Query</option>
+      <option value="distance">Query By Distance</option>
     </select>
-    <form class="esri-widget" id="textInput">
-      <input type="text" name="Country_Address">
-    </form>
-    <br>
-    <br>
-    <button class="esri-widget" id="doBtn">Do Query</button>
-    <br>
-    <p><span id="printResults"></span></p>
-
+  </div>
 </body>
+<footer>
+<div id="copyright">
+  <script>
+   // create a variable to store a new date object with the current date and time.
+   var today = new Date();
+   // set the value of variable year is current year.
+   var year = today.getFullYear();
+   // write copyright message with current year.
+   document.writeln("Copyright &copy; " + year);
+ </script>
+</div>
+<footer>
 </html>
